@@ -8,6 +8,7 @@ RUN npm install
 
 COPY . .
 
+ENV NODE_ENV=production
 ENV NODE_OPTIONS=--openssl-legacy-provider
 
 RUN npm run build
@@ -19,7 +20,7 @@ RUN rm -rf /usr/share/nginx/html/*
 
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-COPY --from=builder /app/dist /usr/share/nginx/html
+COPY --from=builder /app/dist /usr/share/nginx/html/momo-store
 
 EXPOSE 80
 
