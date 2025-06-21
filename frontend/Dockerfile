@@ -1,4 +1,5 @@
-FROM node:18-alpine
+# Этап 1 сборка
+FROM node:18-alpine AS builder
 
 WORKDIR /app
 
@@ -6,7 +7,17 @@ COPY package*.json ./
 RUN npm install
 
 COPY . .
+RUN npm run build
 
-EXPOSE 8080
+# Этап 2 создание минимального образа
+FROM nginx:alpine
 
-CMD [ "npm", "run", "serve" ]
+RUN rm -rf /usr/share/nginx/html/*
+
+COPY --from=builder /app/dist /usr/share/nginx/html
+
+EXPOSE 80
+
+# EXPOSE 8080
+
+# CMD [ "npm", "run", "serve" ]
