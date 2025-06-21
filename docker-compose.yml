@@ -2,18 +2,18 @@ version: "3.8"
 
 services:
   backend:
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
+    container_name: backend
+    image: arturdzh/docker-project-backend:latest
     ports:
       - "8081:8081"
 
   frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
+    container_name: frontend
+    image: arturdzh/docker-project-frontend:latest
     ports:
       - "8080:8080"
+    environment:
+      - NODE_OPTIONS=--openssl-legacy-provider
     volumes:
       - ./frontend:/app
       - /app/node_modules
