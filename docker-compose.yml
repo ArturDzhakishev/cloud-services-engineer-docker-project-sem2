@@ -4,8 +4,8 @@ services:
   backend:
     container_name: backend
     image: arturdzh/docker-project-backend:latest
-    # ports:
-    #   - "8081:8081"
+    networks:
+      - internal
 
   frontend:
     container_name: frontend
@@ -18,3 +18,9 @@ services:
       - ./frontend:/app
       - /app/node_modules
       - ./frontend/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    networks:
+      - internal
+
+networks:
+  internal:
+    external: false
