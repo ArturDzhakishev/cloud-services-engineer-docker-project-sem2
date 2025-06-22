@@ -16,8 +16,7 @@ services:
     container_name: frontend
     image: arturdzh/docker-project-frontend:latest
     depends_on:
-      backend:
-        condition: service_healthy
+      - backend
     ports:
       - "80:80"
     volumes:
