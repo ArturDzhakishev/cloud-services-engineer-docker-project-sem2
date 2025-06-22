@@ -70,6 +70,6 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script: |
             cd /home/user/project/ 
-            sudo docker-compose -f docker-compose.yml pull
-            sudo docker-compose -f docker-compose.yml down
-            sudo docker-compose -f docker-compose.yml up -d --scale backend=3
+            sudo docker-compose -f docker-compose.prod.yml pull
+            sudo docker-compose -f docker-compose.prod.yml down
+            sudo docker-compose -f docker-compose.prod.yml up -d --scale backend=3
