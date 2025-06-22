@@ -40,6 +40,8 @@ jobs:
         uses: actions/checkout@v3
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
+      - name: Create example secret file (for validation only)
+        run: echo "example" > my_secret
       - name: Build via Docker Compose
         uses: hoverkraft-tech/compose-action@v2.2.0
 
