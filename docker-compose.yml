@@ -9,6 +9,7 @@ services:
       retries: 3
     mem_limit: 256m
     cpus: 0.5
+    restart: unless-stopped
     networks:
       - internal
 
@@ -31,6 +32,7 @@ services:
       retries: 3
     mem_limit: 256m
     cpus: 0.3
+    restart: unless-stopped
     networks:
       - internal
 
