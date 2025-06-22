@@ -16,11 +16,17 @@ RUN npm run build
 # Этап 2 создание минимального образа
 FROM nginx:alpine
 
+RUN addgroup -S appgroup && adduser -S appuser -G appgroup
+
 RUN rm -rf /usr/share/nginx/html/*
 
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 COPY --from=builder /app/dist /usr/share/nginx/html/momo-store
 
+RUN chown -R appuser:appgroup /usr/share/nginx/html /etc/nginx/conf.d
 
-EXPOSE 80
+USER appuser
+
+
+EXPOSE 8080
