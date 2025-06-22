@@ -1,8 +1,6 @@
-# version: "3.8"
-
 services:
   backend:
-    container_name: backend
+    # container_name: backend
     image: arturdzh/docker-project-backend:latest
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8081/health"]
@@ -13,7 +11,7 @@ services:
       - internal
 
   frontend:
-    container_name: frontend
+    # container_name: frontend
     image: arturdzh/docker-project-frontend:latest
     depends_on:
       backend:
