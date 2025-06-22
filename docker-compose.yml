@@ -11,6 +11,8 @@ services:
     mem_limit: 256m
     cpus: 0.5
     restart: unless-stopped
+    secrets:
+      - my_secret
     networks:
       - internal
 
@@ -39,3 +41,7 @@ services:
 networks:
   internal:
     external: false
+
+secrets:
+  my_secret:
+    file: my_secret
