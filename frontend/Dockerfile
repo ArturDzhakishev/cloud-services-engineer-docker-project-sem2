@@ -20,6 +20,9 @@ RUN addgroup -S appgroup && adduser -S appuser -G appgroup
 
 RUN rm -rf /usr/share/nginx/html/*
 
+RUN mkdir -p /var/cache/nginx/client_temp \
+ && chown -R appuser:appgroup /var/cache/nginx
+
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 COPY --from=builder /app/dist /usr/share/nginx/html/momo-store
