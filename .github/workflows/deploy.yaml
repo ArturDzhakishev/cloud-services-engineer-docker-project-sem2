@@ -69,11 +69,17 @@ jobs:
           SAFE_NAME=$(echo "$IMAGE" | tr '/:' '_')
           trivy image --exit-code 0 --format json -o trivy_${SAFE_NAME}.json "$IMAGE"
 
-      - name: Upload Trivy Report
+      - name: Generate safe artifact name
+        id: artifact-name
+        run: |
+          SAFE_NAME=$(echo "${{ matrix.image }}" | tr '/:' '_')
+          echo "safe_name=$SAFE_NAME" >> $GITHUB_OUTPUT
+
+      - name: Upload Trivy report
         uses: actions/upload-artifact@v4
         with:
-          name: trivy-${{ matrix.image }}
-          path: trivy_*.json
+          name: trivy-${{ steps.artifact-name.outputs.safe_name }}
+          path: trivy-report.json
   
   deploy:
     name: Deploy
