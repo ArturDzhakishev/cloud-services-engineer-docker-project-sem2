@@ -13,9 +13,15 @@ RUN go build -o app ./cmd/api
 # Этап 2 создание минимального образа
 FROM alpine:latest
 
+RUN addgroup -S backendgroup && adduser -S appuser -G backendgroup
+
 WORKDIR /app
 
 COPY --from=builder /app/app .
+
+RUN chown -R appuser:backendgroup /app
+
+USER appuser 
 
 EXPOSE 8081
 
