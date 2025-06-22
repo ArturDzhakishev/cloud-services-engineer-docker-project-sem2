@@ -58,27 +58,22 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Scan ${{ matrix.image }} with Trivy
-        uses: aquasecurity/trivy-action@master
-        with:
-          scan-type: image
-          image-ref: ${{ matrix.image }}
-          format: json
-          ignore-unfixed: true
-          vuln-type: os,library
-          severity: CRITICAL,HIGH
-          exit-code: 0 
-
-      - name: Rename report for ${{ matrix.image }}
+      - name: Install Trivy
         run: |
-          SAFE_NAME=$(echo "${{ matrix.image }}" | tr '/:' '_')
-          mv trivy-report.json trivy-${SAFE_NAME}.json
+          curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh
+          sudo mv trivy /usr/local/bin/
+
+      - name: Scan image with Trivy
+        run: |
+          IMAGE="${{ matrix.image }}"
+          SAFE_NAME=$(echo "$IMAGE" | tr '/:' '_')
+          trivy image --exit-code 0 --format json -o trivy_${SAFE_NAME}.json "$IMAGE"
 
       - name: Upload Trivy Report
         uses: actions/upload-artifact@v4
         with:
           name: trivy-${{ matrix.image }}
-          path: trivy-${{ matrix.image }}.json
+          path: trivy_*.json
   
   deploy:
     name: Deploy
