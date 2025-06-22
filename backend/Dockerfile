@@ -13,6 +13,8 @@ RUN go build -o app ./cmd/api
 # Этап 2 создание минимального образа
 FROM alpine:latest
 
+RUN apk add --no-cache curl
+
 RUN addgroup -S backendgroup && adduser -S appuser -G backendgroup
 
 WORKDIR /app
