@@ -23,13 +23,14 @@ RUN rm -rf /usr/share/nginx/html/*
 RUN mkdir -p /var/cache/nginx/client_temp \
  && chown -R appuser:appgroup /var/cache/nginx
 
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY default.conf /etc/nginx/conf.d/default.conf
+COPY nginx /etc/nginx/nginx.conf
 
 COPY --from=builder /app/dist /usr/share/nginx/html/momo-store
 
 RUN chown -R appuser:appgroup /usr/share/nginx/html /etc/nginx/conf.d
 
-USER appuser
+# USER appuser
 
 
 EXPOSE 8080
