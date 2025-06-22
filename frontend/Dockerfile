@@ -30,7 +30,7 @@ COPY --from=builder /app/dist /usr/share/nginx/html/momo-store
 
 RUN chown -R appuser:appgroup /usr/share/nginx/html /etc/nginx/conf.d
 
-# USER appuser
+USER appuser
 
 
 EXPOSE 8080
