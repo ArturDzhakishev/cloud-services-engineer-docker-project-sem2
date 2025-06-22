@@ -79,7 +79,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: trivy-${{ steps.artifact-name.outputs.safe_name }}
-          path: trivy-report.json
+          path: trivy_${{ steps.artifact-name.outputs.safe_name }}.json
   
   deploy:
     name: Deploy
